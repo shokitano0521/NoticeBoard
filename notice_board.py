@@ -6,7 +6,7 @@ import base64
 import webbrowser
 import shutil
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QFrame
-from PyQt6.QtGui import QShortcut, QKeySequence, QPixmap, QMouseEvent
+from PyQt6.QtGui import QShortcut, QKeySequence, QPixmap, QMouseEvent, QBrush, QPalette
 from PyQt6.QtCore import Qt, QPoint
 
 class ImageWidget(QFrame):
@@ -20,6 +20,7 @@ class ImageWidget(QFrame):
         self.setMinimumHeight(30)
         self.setMouseTracking(True)
         self.resizing = False
+        self.setStyleSheet("background-color: white;")
         self.layout = QVBoxLayout(self)
         self.layout.setContentsMargins(0, 0, 0, 0)
 
@@ -140,6 +141,7 @@ class FullScreenApp(QWidget):
         # ドラッグ＆ドロップの設定
         self.setAcceptDrops(True)
 
+
     def get_image_folder(self):
         folder_name = "NoticeBoardImages"
         desktop_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
@@ -171,6 +173,14 @@ IconResource={icon_path},0
         self.esc_shortcut = QShortcut(QKeySequence(Qt.Key.Key_Escape), self)
         self.esc_shortcut.activated.connect(self.close)
         self.load_settings()
+        # 背景画像の設定
+        self.set_background_image("コルクボード.jpg")
+
+    def set_background_image(self, image_path):
+        pixmap = QPixmap(image_path)
+        palette = QPalette()
+        palette.setBrush(QPalette.ColorRole.Window, QBrush(pixmap))
+        self.setPalette(palette)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():

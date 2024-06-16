@@ -6,7 +6,7 @@ a = Analysis(
     ['notice_board.py'],
     pathex=['.'],
     binaries=[],
-    datas=[('settings.json', '.')],
+    datas=[('settings.json', '.'), ('コルクボード.jpg', '.')],
     hiddenimports=[],
     hookspath=[],
     runtime_hooks=[],
